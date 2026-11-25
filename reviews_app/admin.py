@@ -1,3 +1,19 @@
+"""Admin configuration for business reviews."""
+
 from django.contrib import admin
 
-# Register your models here.
+from .models import Review
+
+
+@admin.register(Review)
+class ReviewAdmin(admin.ModelAdmin):
+    """Configure the administration of business reviews."""
+
+    list_display = ("reviewer", "business_user", "rating", "created_at")
+    list_filter = ("rating", "created_at")
+    search_fields = (
+        "reviewer__username",
+        "business_user__username",
+        "description",
+    )
+    readonly_fields = ("created_at", "updated_at")
